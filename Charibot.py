@@ -11,7 +11,7 @@ TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/"
 
 @app.route('/')
 def home():
-    return "🔥 Bot IA activo 🚀"
+   return "🔥 BOT IA VERSION FINAL 🔥"
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
