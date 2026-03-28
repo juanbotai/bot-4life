@@ -26,7 +26,6 @@ def webhook():
         send_message(chat_id, respuesta)
 
     return "ok"
-
 def generar_respuesta(texto_usuario):
     try:
         headers = {
@@ -46,8 +45,7 @@ def generar_respuesta(texto_usuario):
         )
 
         result = response.json()
-
-        print(result)  # 👈 IMPORTANTE para logs
+        print(result)
 
         if "output" in result:
             for item in result["output"]:
@@ -55,18 +53,11 @@ def generar_respuesta(texto_usuario):
                     if "text" in content:
                         return content["text"]
 
-        return "⚠️ IA no respondió"
+        return "⚠️ IA sin respuesta"
 
     except Exception as e:
         print(e)
         return "⚠️ Error IA"
-
-        result = response.json()
-
-        return result.get("output", [{}])[0].get("content", [{}])[0].get("text", "⚠️ Error con IA")
-
-    except Exception as e:
-        return "⚠️ Error al conectar con IA"
 
 def send_message(chat_id, text):
     requests.post(TELEGRAM_URL + "sendMessage", json={
