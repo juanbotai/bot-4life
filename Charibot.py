@@ -11,16 +11,18 @@ TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/"
 
 @app.route('/')
 def home():
-   return "🔥 BOT IA VERSION FINAL 🔥"
+    return "🔥 BOT IA VERSION FINAL 🔥"
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-   data = request.get_json()
+    data = request.get_json()
 
-if not data:
-    return "ok"
+    # 🔥 Validar si no hay datos
+    if not data:
+        return "ok"
 
-if "message" in data:
+    # 🔥 Procesar mensaje
+    if "message" in data:
         chat_id = data["message"]["chat"]["id"]
         user_text = data["message"].get("text", "")
 
@@ -29,6 +31,8 @@ if "message" in data:
         send_message(chat_id, respuesta)
 
     return "ok"
+
+
 def generar_respuesta(texto_usuario):
     try:
         headers = {
@@ -62,11 +66,13 @@ def generar_respuesta(texto_usuario):
         print(e)
         return "⚠️ Error IA"
 
+
 def send_message(chat_id, text):
     requests.post(TELEGRAM_URL + "sendMessage", json={
         "chat_id": chat_id,
         "text": text
     })
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
