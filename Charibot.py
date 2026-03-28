@@ -15,9 +15,12 @@ def home():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    data = request.get_json()
+   data = request.get_json()
 
-    if "message" in data:
+if not data:
+    return "ok"
+
+if "message" in data:
         chat_id = data["message"]["chat"]["id"]
         user_text = data["message"].get("text", "")
 
