@@ -35,8 +35,8 @@ def generar_respuesta(texto_usuario):
         }
 
         data = {
-            "model": "gpt-4.1-mini",
-            "input": f"Eres un experto en ventas de 4Life. Responde de forma clara, amigable y persuasiva: {texto_usuario}"
+            "model": "gpt-4o-mini",
+            "input": texto_usuario
         }
 
         response = requests.post(
@@ -44,6 +44,22 @@ def generar_respuesta(texto_usuario):
             headers=headers,
             json=data
         )
+
+        result = response.json()
+
+        print(result)  # 👈 IMPORTANTE para logs
+
+        if "output" in result:
+            for item in result["output"]:
+                for content in item.get("content", []):
+                    if "text" in content:
+                        return content["text"]
+
+        return "⚠️ IA no respondió"
+
+    except Exception as e:
+        print(e)
+        return "⚠️ Error IA"
 
         result = response.json()
 
